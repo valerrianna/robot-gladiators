@@ -82,9 +82,7 @@ var fight = function(enemy) {
     if (fightOrSkip()) {
     break;
     }
-    var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
-  if (promptFight === "fight" || promptFight === "FIGHT") {
-    var damage = randomNumber(playerInfo.attack-3,playerInfo.attack);
+  var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
     enemy.health = Math.max(0, enemy.health - damage);
       console.log(
         playerInfo.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.health + " health remaining."
@@ -108,25 +106,9 @@ var fight = function(enemy) {
       else {
         window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
       }
-    } 
-    else if (promptFight === "skip" || promptFight === "SKIP") {
-      var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-          if (confirmSkip) {
-              window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
-              playerInfo.money = Math.max(0,playerInfo.money -10);
-              console.log("playerInfo.money",playerInfo.money);
-              break;
-          }
-          else {
-              fight();
-          }
-  } 
-    else {
-      window.alert("You need to choose a valid option. Try again!");
     }
-  }
-};
-
+}
+    
 var startGame = function() {
   playerInfo.reset();
   for (var i = 0; i < enemyInfo.length; i++) {
@@ -166,19 +148,18 @@ var endGame = function() {
 };
 
 var shop = function() {
-  var shopOptionPrompt = window.prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice.");
+  var shopOptionPrompt = window.prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one 1 for REFILL, 2 for UPGRADE, or 3 for LEAVE.");
+  shopOptionPrompt = parseInt(shopOptionPrompt);
   switch (shopOptionPrompt) {
-    case "REFILL":
-    case "refill":
-      playerInfo.refillHealth(); 
+    case 1:
+      playerInfo.refillHealth();
       break;
-    case "UPGRADE":
-    case "upgrade":
+    case 2:
       playerInfo.upgradeAttack();
       break;
-    case "LEAVE":
-    case "leave":
-        break;
+    case 3:
+      window.alert("Leaving the store.");
+      break;
     default:
       window.alert("You did not pick a valid option. Try again.");
       shop();
@@ -186,4 +167,4 @@ var shop = function() {
   }
 }
 
-startGame();
+startGame(); 
