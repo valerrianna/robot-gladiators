@@ -56,10 +56,33 @@ var enemyInfo = [
   }
 ];
 
+var fightOrSkip = function() {
+  var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
+  if (!promptFight) {
+    window.alert("You need to provide a valid answer! Please try again.");
+    return fightOrSkip();
+  }
+
+  promptFight = promptFight.toLowerCase();
+  
+  if (promptFight === "skip") {
+    var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+    if (confirmSkip) {
+      window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
+      playerInfo.money = Math.max(0, playerInfo.money - 10);
+      return true;
+    }
+  }
+}
+
+
 var fight = function(enemy) {
   console.log(enemy);
   while(playerInfo.health > 0 && enemy.health > 0) {
-      var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.")
+    if (fightOrSkip()) {
+    break;
+    }
+    var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
   if (promptFight === "fight" || promptFight === "FIGHT") {
     var damage = randomNumber(playerInfo.attack-3,playerInfo.attack);
     enemy.health = Math.max(0, enemy.health - damage);
@@ -69,7 +92,8 @@ var fight = function(enemy) {
       if (enemy.health <= 0) {
         window.alert(enemy.name + " has died!");
         break;
-      } else {
+      } 
+      else {
         window.alert(enemy.name + " still has " + enemy.health + " health left.");
       }
       var damage = randomNumber(enemy.attack-3, enemy.attack);
@@ -80,10 +104,12 @@ var fight = function(enemy) {
       if (playerInfo.health <= 0) {
         window.alert(playerInfo.name + " has died!");
         break;
-      } else {
+      } 
+      else {
         window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
       }
-    } else if (promptFight === "skip" || promptFight === "SKIP") {
+    } 
+    else if (promptFight === "skip" || promptFight === "SKIP") {
       var confirmSkip = window.confirm("Are you sure you'd like to quit?");
           if (confirmSkip) {
               window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
@@ -94,7 +120,8 @@ var fight = function(enemy) {
           else {
               fight();
           }
-    } else {
+  } 
+    else {
       window.alert("You need to choose a valid option. Try again!");
     }
   }
