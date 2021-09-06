@@ -143,20 +143,28 @@ var startGame = function() {
 };
 
 var endGame = function() {
-  if (playerInfo.health > 0) {
     window.alert("The game has now ended. Let's see how you did!");
-  }
-  else {
-    window.alert("You've lost your robot in battle.")
-  }
-  var playAgainConfirm = window.confirm("Would you like to play again?");
-  if (playAgainConfirm) {
-    startGame();
-  }
-  else {
-    window.alert("Thank you for playing Robot Gladiators! Come back soon!");
-  }
-};
+    var highScore = localStorage.getItem("highscore");
+    if (highScore === null) {
+      highScore = 0;
+    }
+    if (playerInfo.money > highScore) {
+      localStorage.setItem("highscore", playerInfo.money);
+      localStorage.setItem("name",playerInfo.name);
+
+      alert(playerInfo.name + " now has the highscore of " + playerInfo.money)
+    }
+    else {
+      alert(playerInfo.name + " did not beat the high score of " + playerInfo.money)
+    }
+    var playAgainConfirm = window.confirm("Would you like to play again?");
+    if (playAgainConfirm) {
+      startGame ();
+    }
+    else {
+      window.alert("Thank-you for playing Robot Gladiators! Come back soon!")
+    }
+  };
 
 var shop = function() {
   var shopOptionPrompt = window.prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one 1 for REFILL, 2 for UPGRADE, or 3 for LEAVE.");
